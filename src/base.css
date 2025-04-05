@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+
+:root {
+  color-scheme: dark light;
+}
+
+body {
+  @apply font-sans bg-stone-100 dark:bg-stone-900;
+}
+
+code {
+  @apply font-mono;
+}
