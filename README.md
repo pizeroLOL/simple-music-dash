@@ -1,34 +1,28 @@
-## Usage
+# Simple Music Dashboard
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
-
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+## 开发
 
 ```bash
-$ npm install # or pnpm install or yarn install
+# 安装依赖
+pnpm install
+
+# 修改配置文件
+mv .env.example .env
+$EDITOR .env
+
+# 启动开发服务器
+pnpm run dev
+
+# 构建生产版本
+pnpm run build
 ```
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+## TODO
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm run dev` or `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-
-### `npm run build`
-
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-## Deployment
-
-You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+- [ ] 优雅的播放音乐
+- [ ] 使用 store 拆分状态
+- [ ] 接入天气
+- [ ] 音乐列表
+- [ ] 歌词
+- [ ] 动态歌词
+- [ ] ctrl + k 搜索
