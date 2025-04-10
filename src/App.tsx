@@ -159,12 +159,20 @@ const App: Component = () => {
                 </button>
                 <div>
                   <div class="mx-auto w-fit flex gap-2 *:hover:bg-stone-300 dark:*:hover:bg-stone-700 *:block *:rounded-full *:px-2 *:py-1">
-                    <button onClick={() => setPlayIndex((acc) => (acc - 1 >= 0 ? acc - 1 : 0))}>
+                    <button
+                      onClick={() => {
+                        setPlayIndex((acc) => (acc - 1 >= 0 ? acc - 1 : 0))
+                        if (audio) {
+                          setPlayStatus('playing')
+                          audio.play()
+                        }
+                      }}
+                    >
                       I&lt;|
                     </button>
                     {statusMap[playStatus()]}
                     <button
-                      onClick={() =>
+                      onClick={() => {
                         setPlayIndex((acc) => {
                           const nowPlaylist = playlist()
                           if (nowPlaylist != undefined) {
@@ -172,7 +180,11 @@ const App: Component = () => {
                           }
                           return acc
                         })
-                      }
+                        if (audio) {
+                          setPlayStatus('playing')
+                          audio.play()
+                        }
+                      }}
                     >
                       |&gt;I
                     </button>
@@ -201,9 +213,15 @@ const App: Component = () => {
       </div>
       <audio
         src={playlist()?.[playIndex()].url}
+        onLoad={() => setPlayStatus('loading')}
+        onPlay={() => setPlayStatus('playing')}
+        onPause={() => setPlayStatus('pause')}
         onCanPlay={() => {
           console.log('?')
-          setPlayStatus((acc) => (acc == 'loading' ? 'playing' : acc))
+          setPlayStatus((acc) => (acc == 'loading' ? 'pause' : acc))
+          if (audio) {
+            audio.play()
+          }
         }}
         onEnded={() => {
           setPlayStatus((acc) => (acc == 'playing' ? 'loading' : acc))
@@ -214,10 +232,13 @@ const App: Component = () => {
             }
             return acc
           })
+          if (audio) {
+            audio.play()
+          }
         }}
         onTimeUpdate={(it) => {
           if (range != undefined) {
-            range.value = `${it.currentTarget.currentTime / it.currentTarget.duration * 100}`
+            range.value = `${(it.currentTarget.currentTime / it.currentTarget.duration) * 100}`
           }
         }}
         ref={audio}
@@ -231,7 +252,7 @@ const App: Component = () => {
           class="absolute block translate-x-1/2 right-1/2 -translate-y-1/2 w-dvw"
           onChange={(it) => {
             if (audio != undefined) {
-              audio.currentTime = Number(it.currentTarget.value) / 100 * audio.duration
+              audio.currentTime = (Number(it.currentTarget.value) / 100) * audio.duration
             }
           }}
           value={0}
